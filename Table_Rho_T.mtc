@@ -1,0 +1,32 @@
+{ TABUL_Solid=
+ 
+   { Density= CourbeTabuleeMulti 9 1 1
+        20 7950
+		90 7920
+		200 7880
+		320 7830
+		430 7790
+		540 7740
+		650 7690
+		760 7640
+		870 7590
+   }
+   
+   { Specific_Heat= CourbeTabuleeMulti 9 1 1
+        20 452
+		90 486
+		200 528
+		320 548
+		430 565
+		540 573
+		650 586
+		760 615
+		870 649
+   }
+   
+   { Thermal_conductivity= CourbeTabuleeMulti 3 1 1
+		200 13.5
+		400 16
+		600 18.5
+   }
+}

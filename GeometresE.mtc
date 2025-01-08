@@ -1,0 +1,418 @@
+
+{ GeometresE=
+    { Type= ModeleDeModeles }
+      { Dependance= 
+        
+      { Maillage= MaillagePrincipal }
+   
+      { Modele= GeoBord }
+        
+      { Modele= DefinitionP1 }
+      { Modele= GeoP1 }
+      { Modele= DistanceP1 }
+	  
+	  { Modele= DefinitionP3 }
+      { Modele= GeoP3 }
+      { Modele= DistanceP3 }
+	  
+	  { Modele= DefinitionP4 }
+      { Modele= GeoP4 }
+      { Modele= DistanceP4 }
+  
+	  { Modele= DefinitionP8 }
+      { Modele= GeoP8 }
+      { Modele= DistanceP8 }
+	  
+	  { Modele= DefinitionP9 }
+      { Modele= GeoP9 }
+      { Modele= DistanceP9 }
+	  
+      { Modele= CalculAlpha }
+	  
+    }
+}
+
+{ GeoBord=
+    { Type= ModeleDeGeometres }
+    { Data=
+        { Geometre= 
+            { Type= GeometreChamp }
+            { Data=
+                { Champ= BordNoeud }
+                { ValeurSeuilMin= 0.999999 }
+                { ValeurSeuilMax= 1.000001 }
+            }
+        }
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+    }
+}
+
+{ DefinitionP1=
+    { Type= ModeleDeMouvements }
+    { Data=
+        { Repere=
+            { Dimension= 2 } 
+            { Nom= Entree }
+            { Origine= 0 0 } 
+            { Normale= 1 0 } 
+        }
+    }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+    }
+}
+
+{ GeoP1=
+    { Type= ModeleDeGeometres }
+    { Data=
+		{ Geometre= 
+			{ Nom= Entree}
+			{ Type= GeometreAnalytique }
+			{ Data=
+				{ Forme= 
+					{ Dimension= 2 } 
+					{ Type= DemiPlan }
+                    								
+				}
+				{ Repere= Entree }
+			}
+		}
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Modele= DefinitionP1 }
+    }
+}
+
+{ DistanceP1=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= LevelSetEntree1 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= AppartientEntree1 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ ItemSolveur=
+			{ Type= ISGeometre }
+			{ NbChampSolution= 2 }
+			{ ChampSolution= AppartientEntree1 LevelSetEntree1 }
+			{ NbChampParametre= 2 }
+			{ ChampParametre= Coordonnees PrecisionFrontieres }
+			{ Geometre= Entree}
+			{ Distance= 1 }
+			{ Appartient= 1 }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Coordonnees }
+		{ Champ= PrecisionFrontieres }
+	}
+}
+
+{ DefinitionP3=
+    { Type= ModeleDeMouvements }
+    { Data=
+        { Repere=
+            { Dimension= 2 } 
+            { Nom= Entree3 }
+            { Origine= 0 0 } 
+            { Normale= 0 1 } 
+        }
+    }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+    }
+}
+
+{ GeoP3=
+    { Type= ModeleDeGeometres }
+    { Data=
+		{ Geometre= 
+			{ Nom= MURBAS }
+			{ Type= GeometreAnalytique }
+			{ Data=
+				{ Forme= 
+					{ Dimension= 2 } 
+					{ Type= DemiPlan }
+                    								
+				}
+				{ Repere= Entree3 }
+			}
+		}
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Modele= DefinitionP3 }
+    }
+}
+
+{ DistanceP3=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= LevelSetEntree3 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= AppartientEntree3 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ ItemSolveur=
+			{ Type= ISGeometre }
+			{ NbChampSolution= 2 }
+			{ ChampSolution= AppartientEntree3 LevelSetEntree3 }
+			{ NbChampParametre= 2 }
+			{ ChampParametre= Coordonnees PrecisionFrontieres }
+			{ Geometre= MURBAS }
+			{ Distance= 1 }
+			{ Appartient= 1 }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Coordonnees }
+		{ Champ= PrecisionFrontieres }
+	}
+}
+
+{ DefinitionP4=
+    { Type= ModeleDeMouvements }
+    { Data=
+        { Repere=
+            { Dimension= 2 } 
+            { Nom= Entree4 }
+            { Origine= 2 0 } 
+            { Normale= -1 0 } 
+        }
+    }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+    }
+}
+
+{ GeoP4=
+    { Type= ModeleDeGeometres }
+    { Data=
+		{ Geometre= 
+			{ Nom= SORTIE }
+			{ Type= GeometreAnalytique }
+			{ Data=
+				{ Forme= 
+					{ Dimension= 2 } 
+					{ Type= DemiPlan }
+                    								
+				}
+				{ Repere= Entree4 }
+			}
+		}
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Modele= DefinitionP4 }
+    }
+}
+
+{ DistanceP4=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= LevelSetEntree4 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= AppartientEntree4 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ ItemSolveur=
+			{ Type= ISGeometre }
+			{ NbChampSolution= 2 }
+			{ ChampSolution= AppartientEntree4 LevelSetEntree4 }
+			{ NbChampParametre= 2 }
+			{ ChampParametre= Coordonnees PrecisionFrontieres }
+			{ Geometre= SORTIE }
+			{ Distance= 1 }
+			{ Appartient= 1 }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Coordonnees }
+		{ Champ= PrecisionFrontieres }
+	}
+}
+
+
+{ DefinitionP8=
+    { Type= ModeleDeMouvements }
+    { Data=
+        { Repere=
+            { Dimension= 2 } 
+            { Nom= Entree8 }
+            { Origine= 0 1 } 
+            { Normale= 0 -1 } 
+        }
+    }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+    }
+}
+
+{ GeoP8=
+    { Type= ModeleDeGeometres }
+    { Data=
+		{ Geometre= 
+			{ Nom= MURHAUT }
+			{ Type= GeometreAnalytique }
+			{ Data=
+				{ Forme= 
+					{ Dimension= 2 } 
+					{ Type= DemiPlan }
+                    								
+				}
+				{ Repere= Entree8 }
+			}
+		}
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Modele= DefinitionP8 }
+    }
+}
+
+{ DistanceP8=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= LevelSetEntree8 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= AppartientEntree8 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ ItemSolveur=
+			{ Type= ISGeometre }
+			{ NbChampSolution= 2 }
+			{ ChampSolution= AppartientEntree8 LevelSetEntree8 }
+			{ NbChampParametre= 2 }
+			{ ChampParametre= Coordonnees PrecisionFrontieres }
+			{ Geometre= MURHAUT }
+			{ Distance= 1 }
+			{ Appartient= 1 }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Coordonnees }
+		{ Champ= PrecisionFrontieres }
+	}
+}
+
+{ DefinitionP9=
+    { Type= ModeleDeMouvements }
+    { Data=
+        { Repere=
+            { Dimension= 2 } 
+            { Nom= Entree9 }
+            { Origine= 0.5 0.5 } 
+            { Normale= 1 0 } 
+        }
+    }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+    }
+}
+
+{ GeoP9=
+    { Type= ModeleDeGeometres }
+    { Data=
+		{ Geometre= 
+			{ Nom= CERCLE }
+			{ Type= GeometreAnalytique }
+			{ Data=
+				{ Forme= 
+					{ Dimension= 2 } 
+					{ Type= Boule }
+					{ Data =
+						{ Rayon= 0.005 }
+					}
+                    								
+				}
+				{ Repere= Entree9 }
+			}
+		}
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Modele= DefinitionP9 }
+    }
+}
+
+{ DistanceP9=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= LevelSetEntree9 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= AppartientEntree9 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ ItemSolveur=
+			{ Type= ISGeometre }
+			{ NbChampSolution= 2 }
+			{ ChampSolution= AppartientEntree9 LevelSetEntree9 }
+			{ NbChampParametre= 2 }
+			{ ChampParametre= Coordonnees PrecisionFrontieres }
+			{ Geometre= CERCLE }
+			{ Distance= 1 }
+			{ Appartient= 1 }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Coordonnees }
+		{ Champ= PrecisionFrontieres }
+	}
+}
+
+{ CalculAlpha=
+   { Type= ModeleParticulaire }
+   { Data=	
+      { ItemSolveur=
+         { Type= ISfonctionTC }
+ 		 { Passe= 9 }
+         { NbChampSolution= 1 }
+         { ChampSolution= Alpha }
+         { NbChampParametre= 3 }
+         { ChampParametre= LevelSetEntree9 Lmin Lmax }
+      }
+   }
+   { DependanceModifiable=
+       { Champ= Alpha }
+   }
+   { Dependance=
+      { Maillage= MaillagePrincipal }
+      { Champ= LevelSetEntree9  }
+      { Champ= Lmax }
+      { Champ= Lmin }
+   }
+}
+

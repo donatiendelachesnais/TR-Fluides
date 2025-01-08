@@ -1,0 +1,125 @@
+{ ResolutionTemperature=
+     { Type= ModeleElementsFinis }
+     { Data=
+         { Champ=
+             { Type= P0C_Scalaire_Par }
+             { Nom= solverT }
+             { Data= ValeurItem 1 1 }
+         }
+         { Champ=
+             { Type= P0C_Scalaire_Par }
+             { Nom= TemperatureInit }
+             { Data= ValeurItem 1 0 }
+         }
+		 { Champ=
+             { Type= P1_Scalaire_Par }
+             { Nom= Nusseltlocal }
+             { Data= ValeurItem 1 0 }
+         }
+         { Champ=
+             { Type= P1_Scalaire_Par }
+             { Nom= Temperature }
+             { Data= ValeurItem 1 10 }
+         }
+         { Champ=
+             { Type= P1_Scalaire_Par }
+             { Nom= TemperatureMoins }
+             { Data= ValeurItem 1 10 }
+         }
+         { Champ=
+             { Type= P1_Scalaire_Par }
+             { Nom= TemperatureMoinsMoins }
+             { Data= ValeurItem 1 10 }
+         }
+         { Champ=
+             { Type= P0C_Scalaire_Par }
+             { Nom= TEntree }
+             { Data= ValeurItem 1 1000 }
+         }
+         { Champ=
+             { Type= P0C_Scalaire_Par }
+             { Nom= Tc }
+             { Data= ValeurItem 1 300 }
+         }
+		 { Champ=
+             { Type= P0C_Scalaire_Par }
+             { Nom= deltaT }
+             { Data= ValeurItem 1 700 }
+         }
+		 { Champ=
+             { Type= P0C_Scalaire_Par }
+             { Nom= Tmoy }
+             { Data= ValeurItem 1 650 }
+         }
+		 { Champ=
+             { Type= P1_Scalaire_Par }
+             { Nom= SourceRay }
+             { Data= ValeurItem 1 0 }
+         }
+		 { Champ=
+             { Type= P0C_Scalaire_Par }
+             { Nom= ReactionT }
+             { Data= ValeurItem 1 0 }
+         }
+		 	 
+		 
+     { SolveurLocal=
+         { Methode=
+             { Implicite= 1 }
+             { Diffusion= RFB }
+             { Convection= SUPG }
+         }
+         { Type= ConvectionDiffusionReactionP1 }
+         { Resolution= 4 }
+         { Preconditionneur= 24 }
+         { Precision= 1e-7 }
+         { NbChampParametre= 8 }
+         { ChampParametre= Vitesse TemperatureMoins PasDeTemps SourceRay Conductivite RhoCp ReactionT TemperatureMoinsMoins }
+         { NbChampSolution= 1 }
+         { ChampSolution= Temperature }
+         { CoefficientDiffusion= 8 }
+
+
+     }
+         { Solveur=
+             { Type= SolveurLineaire }
+             { Precision= 1e-5 }
+             { TypeDeNorme= 1 }
+             { NbIterMaxLineaire= 3000 }
+         }
+     }
+
+     { Dependance=
+         { Champ= TemperatureMoins }
+         { Champ= TemperatureMoinsMoins }
+         { Champ= PasDeTemps }
+         { Champ= Vitesse }
+         { Champ= SourceRay }
+         { Champ= ReactionT }
+         { Champ= Conductivite }
+         { Champ= RhoCp }
+         { Maillage= MaillagePrincipal }
+         { ModeleCL= CLThermique }
+		 
+     }
+     { DependanceModifiable=
+         { Champ= Temperature }
+
+     }
+}
+
+
+
+{ UpdateT=
+    { Type= ModeleArithmetique }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+        { Champ= Temperature }
+    }
+    { DependanceModifiable= 
+        { Champ= TemperatureMoins }
+		{ Champ= TemperatureMoinsMoins }
+    }
+    { Operation= TemperatureMoinsMoins = TemperatureMoins }
+    { Operation= TemperatureMoins = Temperature }
+}

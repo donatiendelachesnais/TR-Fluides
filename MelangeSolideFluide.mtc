@@ -1,0 +1,156 @@
+{ InitialTemperature=
+	{ Type= ModeleParticulaire }
+	{ Data=
+	
+			{ Champ=
+				{ Type= P0C_Scalaire_Par }
+				{ Nom= Tsolide }
+				{ Data= ValeurItem 1 150.0 }
+			}
+			{ Champ=
+				{ Type= P0C_Scalaire_Par }
+				{ Nom= Tfluide }
+				{ Data= ValeurItem 1 10.0 }
+			}
+			{ Champ=
+				{ Type= P1_Scalaire_Par }
+				{ Nom= aux }
+				{ Data= ValeurItem 1 10.0 }
+			}
+			
+		{ ItemSolveur=
+			{ Type= ISRheologieContinue }
+			{ NbChampSolution= 1 }
+			{ ChampSolution= Temperature }
+			{ NbChampParametre= 4 }
+			{ ChampParametre= LevelSetEntree9 Tsolide Tfluide EpaisseurMelange }
+			
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Tsolide }
+		{ Champ= Tfluide }
+		{ Champ= EpaisseurMelange }		
+		{ Champ= LevelSetEntree9 }		
+		{ Champ= Un }		
+	}
+	{ DependanceModifiable=
+		{ Champ= Temperature }
+	}
+}
+
+{ Melange=
+    { Type= ModeleDeModeles }
+    { Data=
+		{ Champ=
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= RhoFluide }
+			{ Data= ValeurItem 1 1 }
+		}
+		{ Champ=
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= RhoSolide }
+			{ Data= ValeurItem 1 3000 }
+		}	
+		{ Champ=
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= EtaFluide }
+			{ Data= ValeurItem 1 0.001 }
+		}
+		{ Champ=
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= EtaSolide }
+			{ Data= ValeurItem 1 1000 }
+		}
+		{ Champ=
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= CpFluide }
+			{ Data= ValeurItem 1 1000 }
+		}
+		{ Champ=
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= CpSolide }
+			{ Data= ValeurItem 1 649 }
+		}
+		
+		{ Champ=
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= ConductiviteFluide }
+			{ Data= ValeurItem 1 0.679 }
+		}
+		{ Champ=
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= ConductiviteSolide }
+			{ Data= ValeurItem 1 18.5 }
+		}
+		{ Champ=
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= EpaisseurMelange }
+			{ Data= ValeurItem 1 0.012 }
+		}
+		{ Champ=
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Eta }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ=
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Rho }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ=
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Cp }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ=
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Conductivite }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ=
+			{ Type= P1_Scalaire_Par }
+			{ Nom= RhoCp }
+			{ Data= ValeurItem 1 0 }
+		}
+	}
+	{ Dependance= 
+		{ Maillage= MaillagePrincipal }
+		{ Modele= MelangePropriete_Solid_Fluide }
+    }
+}
+
+{ MelangePropriete_Solid_Fluide=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ ItemSolveur=
+			{ Type= ISMelangeProprieteThermique }
+			{ NbChampSolution= 5 }
+			{ ChampSolution= Rho Cp Conductivite Eta RhoCp }
+			{ NbChampParametre= 10 }
+			{ ChampParametre= LevelSetEntree9 RhoSolide RhoFluide CpSolide CpFluide ConductiviteSolide ConductiviteFluide EtaSolide EtaFluide EpaisseurMelange }
+			{ LoiMelange= 4 } 
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= RhoSolide }
+		{ Champ= RhoFluide }
+		{ Champ= CpSolide }
+		{ Champ= CpFluide }
+		{ Champ= ConductiviteSolide }
+		{ Champ= ConductiviteFluide }
+		{ Champ= EtaSolide }
+		{ Champ= EtaFluide }
+		{ Champ= EpaisseurMelange }		
+		{ Champ= LevelSetEntree9 }		
+	}
+	{ DependanceModifiable=
+		{ Champ= Rho }
+		{ Champ= Cp }
+		{ Champ= Conductivite }	
+		{ Champ= RhoCp }
+		{ Champ= Eta }
+	}
+}

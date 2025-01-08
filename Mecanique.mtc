@@ -1,0 +1,166 @@
+{ NavierStokes=
+	{ Type= ModeleElementsFinis }
+	{ Data=
+	     
+		 { Champ= 
+			{ Type= P1_Vecteur_Par }
+			{ Nom= Vitesse }
+			{ Data= ValeurItem 2 0 0 }  	
+		}
+		 { Champ= 
+			{ Type= P1_Vecteur_Par }
+			{ Nom= Vz }
+			{ Data: Dimension/vecteur.txt }	    	
+	    	}
+	   
+		{ Champ= 
+			{ Type= P1_Vecteur_Par }
+			{ Nom= VitesseMoins }
+			{ Data= ValeurItem 2 0 0 } 	
+	    	}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Pression }
+			{ Data= ValeurItem 1 0.0 }
+	    }
+		{ Champ= 
+			{ Type= P1_Vecteur_Par }
+			{ Nom= ZeroVecteur }
+			{ Data= ValeurItem 2 0.0 0.0 }
+	    }
+		{ Champ= 
+			{ Type= P1_Vecteur_Par }
+			{ Nom= VectorD }
+			{ Data= ValeurItem 2 1 0 }
+		}
+		{ Champ= 
+			{ Type= P1_Vecteur_Par }
+			{ Nom= VectorL }
+			{ Data= ValeurItem 2 0 1 }
+		}
+		
+		{ SolveurLocal=
+			{ Type= NavierStokesVMS } 
+			{ Resolution= 4  }  
+			{ Preconditionneur= 24 } 
+			{ NbChampParametre= 8 }
+			{ ChampParametre= Eta Gravite Vitesse VitesseMoins Rho PasDeTemps ZeroVecteur Zero }
+			{ NbChampSolution= 2 }  
+			{ ChampSolution= Vitesse Pression }
+			{ Newton= 0.5 }  
+			
+		}
+
+		{ Solveur= 
+			{ Type= SolveurLineaire }
+			{ TypeDeNorme= 1 }
+			{ Precision= 1e-6 }
+			{ IterMax= 0 }
+		
+			
+		}
+		
+	}
+	{ Dependance=
+		{ Champ= Gravite }
+		{ Champ= ZeroVecteur }
+		{ Champ= Vitesse }
+		{ Champ= VitesseMoins }
+		{ Champ= PasDeTemps }
+		{ Champ= Eta }
+		{ Champ= Rho }
+		{ Champ= Zero }
+		{ Maillage= MaillagePrincipal }
+		{ ModeleCL= CLMecanique } 
+
+
+		
+	}
+}
+
+
+{ UpdateV=
+    { Type= ModeleArithmetique }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+        { Champ= Vitesse }
+    }
+    { DependanceModifiable= 
+        { Champ= VitesseMoins }
+    }
+
+    { Operation= VitesseMoins = Vitesse }
+}
+
+{ ExtraireCox= 
+      { Type= ModeleParticulaire }
+      { Data=
+            { Champ=
+                  { Type= P1_Scalaire_Par }
+                  { Nom= Cox }
+                  { Data= ValeurItem 1 0 }
+            }
+            { ItemSolveur=
+                  { Type= ISExtraire }
+                  { NbChampSolution= 1 }
+                  { ChampSolution= Cox }
+                  { NbChampParametre= 1 }
+                  { ChampParametre= Coordonnees }
+                  { Composante= 0 }
+            }
+      }
+      { Dependance=
+            { Maillage= MaillagePrincipal }
+            { Champ= Coordonnees }
+      }
+}
+
+{ ExtraireCoy= 
+      { Type= ModeleParticulaire }
+      { Data=
+            { Champ=
+                  { Type= P1_Scalaire_Par }
+                  { Nom= Coy }
+					{ Data= ValeurItem 1 0 }
+            }
+            { ItemSolveur=
+                  { Type= ISExtraire }
+                  { NbChampSolution= 1 }
+                  { ChampSolution= Coy }
+                  { NbChampParametre= 1 }
+                  { ChampParametre= Coordonnees }
+                  { Composante= 1 }
+            }
+      }
+      { Dependance=
+            { Maillage= MaillagePrincipal }
+            { Champ= Coordonnees }
+      }
+}
+
+{ PrepareDxDy=
+    { Type= ModeleArithmetique }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+        { Champ= Un }
+		{ Champ= Zero }
+		{ Champ= Cox }
+		{ Champ= Coy }
+		{ Champ= Dx }
+		{ Champ= Dy }
+		{ Champ= y0 }
+		{ Champ= x0 }
+		{ Champ= omega }
+    }
+    { DependanceModifiable= 
+        { Champ= Dx }
+		{ Champ= Dy }
+    }
+
+    { Operation= Dx += Coy }
+	{ Operation= Dx -= y0 }		
+	{ Operation= Dx *= omega }		
+	{ Operation= Dy += x0 }
+	{ Operation= Dy -= Cox }
+	{ Operation= Dy *= omega }
+}

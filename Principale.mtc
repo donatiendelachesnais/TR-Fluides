@@ -1,0 +1,58 @@
+{ Lanceur= monpremiercour } 
+
+{ Fichier10: Increments/increments.mtc }
+{ Fichier6: Increments/temps.mtc }
+
+{ monpremiercour =
+    { Type= ModeleDeModeles }
+
+        { Dependance=  
+            { Maillage= MaillagePrincipal }
+  			{ Modele= Increments } 		 
+		}
+
+ }
+
+
+{ Fichier4: Maillage/MetriqueGenerale.mtc } Scalaire Vecteur
+{ Fichier7: Maillage/adaptation.mtc }
+{ Fichier16: Maillage/Associateur.mtc }
+{ Fichier9: Maillage/maillage.mtc }
+
+
+
+Geometrie
+{ Fichier14: Geometrie/Geometres.mtc }
+{ Fichier15: Geometrie/GeometresCL.mtc }
+{ Fichier16: Geometrie/GeometresMatiere.mtc }
+{ Fichier16: Geometrie/MakeMatiere.mtc }
+
+Solveur
+{ Fichier3: Solveur/Mecanique.mtc }
+{ Fichier12: Solveur/Thermique.mtc }
+{ Fichier5: Solveur/CLMecanique.mtc }
+{ Fichier10: Solveur/CLThermique.mtc }
+
+Melange
+{ Fichier18: Melange/MelangeSolideFluide.mtc }
+{ Fichier19: Melange/ProprieteFonctionDeTemperature.mtc }
+{ Fichier20: Melange/Table_Rho_T.mtc }
+
+IO	
+{ Fichier8: IO/output.mtc }
+{ Fichier1: IO/Parametres.mtc }
+{ Fichier17: IO/Interacteur.mtc }
+
+
+Multiphase
+
+{ Fichier11: Multiphase/ModelesAlpha.mtc }
+{ Fichier13: Multiphase/InitAlpha.mtc }
+{ Fichier21: Multiphase/melange.mtc }
+{ Fichier22: Multiphase/gradient.mtc }
+{ Fichier23: Maillage/DeLaFonction.mtc }
+
+{ Fichier166: Geometrie/GeometresE.mtc }
+
+
+
