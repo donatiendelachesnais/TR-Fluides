@@ -1,0 +1,34 @@
+{ Target= Prompt 0 }
+{ Target= Prompteur 120000 }
+
+
+{ Target= PasDeTemps 0.01 } 
+     
+{ Target= TempsFin 1000 }
+{ Target= FrequenceStockage_vtk 10 } 
+
+**************  proprieté à modifier **************
+{ Target= RhoFluide 1 }  
+{ Target= RhoSolide 3000 }
+{ Target= EtaFluide 0.001 }
+{ Target= EtaSolide 1000 }
+{ Target= CpFluide 1000 }
+{ Target= CpSolide 649 }
+{ Target= ConductiviteFluide 0.679 }
+{ Target= ConductiviteSolide 18.5 }
+{ Target= Tsolide  150 }
+{ Target= Tfluide 10 }
+
+
+
+*********************************************
+
+
+{ Target= NbElements 10000 }   
+{ Target= hMin 0.0001 }  0.0005
+{ Target= Nscaling 1 }
+{ Target= ScaleNorme 1 }
+{ Target= MinNorme 0.0001 }  0.05
+{ Target= Err1 0.5 }  1
+{ Target= Err2 0.1 }  0.01
+{ Target= Adaptateur 5 } 
