@@ -17,7 +17,10 @@
         { Maillage= MaillagePrincipal }  
         { Modele= Interacteur } 
 	  	{ Modele= Geometres } 
-		{ Modele= Sorties }          
+		{ Modele= Sorties } 
+		{ Modele= ExtraireCox }
+		{ Modele= ExtraireCoy } 
+		{ Modele= PrepareDxDy }	
     } 
 }
 

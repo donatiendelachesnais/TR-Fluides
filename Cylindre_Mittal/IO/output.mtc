@@ -32,6 +32,8 @@
 	   { Champ= AppartientEntree4 }
 	   { Champ= AppartientEntree5 }
 	   { Champ= LevelSetEntree5 }
+	   { Champ= Dx }
+	   { Champ= Dy }
     }
 
 }

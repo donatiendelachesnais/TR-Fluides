@@ -22,6 +22,7 @@ Geometrie
 Solveur
 { Fichier3: Solveur/Mecanique.mtc }
 { Fichier5: Solveur/CLMecanique.mtc }
+{ Fichier5: Solveur/VitesseRotation.mtc }
 
 IO	
 { Fichier8: IO/output.mtc }

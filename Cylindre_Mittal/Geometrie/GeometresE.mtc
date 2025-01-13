@@ -117,7 +117,7 @@
         { Repere=
             { Dimension= 2 } 
             { Nom= Entree2 }
-            { Origine= 2.2 0.0 } 
+            { Origine= 300 0.0 } 
             { Normale= -1.0 0.0 } 
         }
     }
@@ -184,7 +184,7 @@
         { Repere=
             { Dimension= 2 } 
             { Nom= Entree3 }
-            { Origine= 0.0 0.41 } 
+            { Origine= 0.0 100 } 
             { Normale= 0.0 -1.0 } 
         }
     }
@@ -319,7 +319,7 @@
         { Repere=
             { Dimension= 2 } 
             { Nom= Entree5 }
-            { Origine= 0.0 0.0 } 
+            { Origine= 50 50 } 
             { Axe= 1 0 0 1 } 
         }
     }
@@ -335,15 +335,11 @@
 			{ Nom= MUR5 }
 			{ Type= GeometreAnalytique }
 			{ Data=
-				{ Forme=
-					{ Type= FormeNewMaillageBis }
-					{ Data=
-						{ M: Circle.t }
-						{ Localisation=
-							{ Brique= Boite }
-							{ Methode= Lineaire }
-							{ TailleMax= 512 }
-						}
+				{ Forme= 
+					{ Dimension= 2 } 
+					{ Type= Boule }
+					{ Data =
+						{ Rayon= 0.5 }
 					}
 				}
 				{ Repere= Entree5 }

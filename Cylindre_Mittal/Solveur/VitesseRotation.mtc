@@ -1,0 +1,68 @@
+{ ExtraireCox= 
+    { Type= ModeleParticulaire }
+    { Data=
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= Cox }
+            { Data= ValeurItem 1 0 }
+        }
+        { ItemSolveur=
+            { Type= ISExtraire }
+            { NbChampSolution= 1 }
+            { ChampSolution= Cox }
+            { NbChampParametre= 1 }
+            { ChampParametre= Coordonnees }
+            { Composante= 0 }
+        }
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Champ= Coordonnees }
+    }
+}
+
+{ ExtraireCoy= 
+    { Type= ModeleParticulaire }
+    { Data=
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= Coy }
+					{ Data= ValeurItem 1 0 }
+        }
+        { ItemSolveur=
+            { Type= ISExtraire }
+            { NbChampSolution= 1 }
+            { ChampSolution= Coy }
+            { NbChampParametre= 1 }
+            { ChampParametre= Coordonnees }
+            { Composante= 1 }
+        }
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Champ= Coordonnees }
+    }
+}
+
+{ PrepareDxDy=
+    { Type= ModeleArithmetique }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+		{ Champ= Cox }
+		{ Champ= Coy }
+		{ Champ= x0 }
+		{ Champ= y0 }
+		{ Champ= omega }
+    }
+    { DependanceModifiable= 
+        { Champ= Dx }
+		{ Champ= Dy }
+    }
+
+    { Operation= Dx += Coy }
+	{ Operation= Dx -= y0 }		
+	{ Operation= Dx *= omega }		
+	{ Operation= Dy += x0 }
+	{ Operation= Dy -= Cox }
+	{ Operation= Dy *= omega }
+}

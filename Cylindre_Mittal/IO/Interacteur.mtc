@@ -30,6 +30,8 @@
 		{ Champ= FrequenceStockage_vtk }
 		{ Champ= Adaptateur }
 		{ Champ= MinNorme }
+		{ Champ= Lmax }
+		{ Champ= omega }
 	}
  	{ Dependance= 
         { Maillage= MaillagePrincipal }

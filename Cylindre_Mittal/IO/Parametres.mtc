@@ -19,7 +19,7 @@
 		{ Champ= 
 			{ Type= P0C_Scalaire_Par }
 			{ Nom= Lmax }
-			{ Data= 1 1 .015 }
+			{ Data= 1 1 .03 }
 		}
 		{ Champ= 
 			{ Type= P0C_Scalaire_Par }
@@ -46,7 +46,37 @@
 			{ Nom= Gravite }
 			{ Data: Dimension/gravite.txt }
 		}
-    }
+		{ Champ= 
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= omega }
+			{ Data= ValeurItem 1 5 }                        
+        }
+		{ Champ= 
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= x0 }
+			{ Data= ValeurItem 1 50 }                   
+        }
+		{ Champ= 
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= y0 }
+			{ Data= ValeurItem 1 50 }   
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Dx }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Dy }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Vin }
+			{ Data= ValeurItem 1 1 }
+		}
+	}
     { Dependance= 
         { Maillage= MaillagePrincipal }
     }

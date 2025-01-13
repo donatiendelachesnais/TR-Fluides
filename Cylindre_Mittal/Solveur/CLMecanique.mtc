@@ -7,18 +7,18 @@
             { Type= CLDirichlet }
             { Appartient= AppartientEntree3 }
             { NbChamps= 3 }
-		    { Degres= Un Un Zero }
+		    { Degres= Zero Un Zero }
 		    { Valeurs= Zero Zero Zero } 
-            { Priorite= 3 }  
+            { Priorite= 1 }  
         } 
 		{ ConditionLimite=
             { Nom= Entree4 }
             { Type= CLDirichlet }
             { Appartient= AppartientEntree4 }
             { NbChamps= 3 }
-		    { Degres=  Un Un Zero }
+		    { Degres=  Zero Un Zero }
 		    { Valeurs= Zero Zero Zero } 
-            { Priorite= 3 } 
+            { Priorite= 1 } 
         }
         { ConditionLimite=
             { Nom= Entree1 }
@@ -26,7 +26,7 @@
             { Appartient= AppartientEntree1 }
             { NbChamps= 3 }
 		    { Degres= Un Un Zero }
-		    { Valeurs= V Zero Zero } 
+		    { Valeurs= Vin Zero Zero } 
             { Priorite= 2 }   
         } 
         { ConditionLimite=
@@ -44,7 +44,7 @@
             { Appartient= AppartientEntree5 }
             { NbChamps= 3 }
 		    { Degres= Un Un Zero }
-		    { Valeurs= Zero Zero Zero } 
+		    { Valeurs= Dx Dy Zero } 
             { Priorite= 1 }   
         } 
 		{ ConditionLimite=
@@ -52,7 +52,7 @@
             { Type= CLDirichlet }
             { Appartient= BordNoeud }
             { NbChamps= 3 }
-		    { Degres= Un Un Zero }
+		    { Degres= Zero Un Zero }
 		    { Valeurs= Zero Zero Zero } 
             { Priorite= 0 }   
         } 
@@ -69,7 +69,15 @@
 			{ Champ= PrecisionFrontieres }
 			{ Champ= V }
 			{ Champ= Un }
-			{ Champ= Zero }			
+			{ Champ= Zero }
+			{ Champ= Dx }	
+			{ Champ= Dy }
+			{ Champ= Cox }
+			{ Champ= Coy }
+			{ Champ= x0 }
+			{ Champ= y0 }
+			{ Champ= omega }
+			{ Champ= Vin }
     }
 }
 
