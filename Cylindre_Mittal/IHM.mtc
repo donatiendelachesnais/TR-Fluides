@@ -2,6 +2,7 @@
 { Target= Prompteur 120000 }
 
 { Target= PasDeTemps 0.009 } 
+59a6fa0039db3e597d56d8b97af4be9802b2d933
      
 { Target= TempsFin 1000 }
 { Target= FrequenceStockage_vtk 5 } 
@@ -13,6 +14,7 @@
 
 { Target= NbElements 10000 }   
 { Target= hMin 0.009 }
+
 { Target= Nscaling 1 }
 { Target= ScaleNorme 1 }
 { Target= MinNorme 0.0001 }
