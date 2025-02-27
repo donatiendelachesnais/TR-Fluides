@@ -1,0 +1,122 @@
+{ ConvectNuTilde=
+    { Type= ModeleDeModeles }
+	{ Data=
+		{ Champ=             
+            { Type= P1_Vecteur_Par }             
+            { Nom= Convection }             
+            { Data= ValeurItem 3 0.0 0.0 0.0 }         
+		}
+		{ Champ=             
+            { Type= P1_Scalaire_Par }             
+            { Nom= Diffusion }             
+            { Data= ValeurItem 1 0.0 }         
+		}
+		{ Champ=             
+            { Type= P1_Scalaire_Par }             
+            { Nom= Reaction }             
+            { Data= ValeurItem 1 0.0 }         
+		}
+	}
+	{ Dependance= 
+		{ Maillage= MaillagePrincipal }
+		{ Modele= CLSpalartAllmaras }
+		{ Modele= ConvDiffReac }
+		{ Modele= UpdateNuTilde }
+
+	}
+}
+
+
+{ ConvDiffReac=
+    { Type= ModeleElementsFinis }
+    { Data=
+        { SolveurLocal=
+            { Methode=
+                { Implicite= 1 }
+                { Diffusion= RFB1 }   Galerkin   Condsplit   RFB // choix de la methode de resolution pour la diffusion pure
+                { Convection= SUPG } Galerkin   SUPG        SCPG  // choix de la methode de resolution pour la convection dominante
+            }
+            { Type= ConvectionDiffusionReactionP1 }
+            { Resolution= 4 }
+            { Preconditionneur= 22 }
+            { Precision= 1e-9 }
+            { NbChampParametre= 8 }
+            { ChampParametre= Convection NuTildeMoins PasDeTemps Zero Diffusion Un Reaction NuTildeMoinsMoins }
+            { NbChampSolution= 1 }
+            { ChampSolution= NuTilde }
+        }
+        { Solveur=
+            { Type= SolveurLineaire }
+            { Precision= 1e-9 }
+            { TypeDeNorme= 1 }
+             NbIterMaxLineaire= 3000 
+        }
+    }
+    { DependanceModifiable=
+        { Champ= NuTilde }
+    }
+    { Dependance=
+        { Champ= Convection }
+      { Champ= NuTildeMoins }
+      { Champ= PasDeTemps }
+      { Champ= Diffusion }
+      { Champ= Zero }
+      { Champ= Un }
+      { Champ= Reaction }
+      { Champ= NuTildeMoinsMoins }
+      { ModeleCL= CLSpalartAllmaras }
+       { Maillage= MaillagePrincipal }
+    }
+}
+
+
+{ CLSpalartAllmaras=
+    { Type= ModeleCLSurGeometres }
+    { Data=
+		{ Entite= NOEUDS }
+		{ ConditionLimite=
+				{ Nom= Condition1ffd }
+				{ Type= CLDirichlet }
+				{ Appartient= AppartientEntreeEcoulement }
+				{ NbChamps= 1 }
+				{ Degres= Un } 
+				{ Valeurs= NuTildeIn }
+				{ Priorite= 3 }
+		}			
+		{ ConditionLimite=
+				{ Nom= Condition5fsdf }
+				{ Type= CLDirichlet }
+				{ Appartient= Appartient_Cylinder }
+				{ NbChamps= 1 }
+				{ Degres= Un } 
+				{ Valeurs= Zero }
+				{ Priorite= 1 }
+		}
+    }
+	{ Precision= PrecisionFrontieres }
+	{ Dependance=
+	  { Maillage= MaillagePrincipal }
+	  { Champ= Appartient_Cylinder }
+	  { Champ= BordNoeud }
+ 	  { Champ= Un }
+	  { Champ= PrecisionFrontieres }
+ 	  { Champ= AppartientEntreeEcoulement }
+ 	  { Champ= Zero }
+	  { Champ= NuTildeIn }
+	}
+}
+
+{ UpdateNuTilde=
+    { Type= ModeleArithmetique }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+        { Champ= NuTilde }
+    }
+    { DependanceModifiable= 
+        { Champ= NuTildeMoins }
+        { Champ= NuTildeMoinsMoins }
+    }
+
+    { Operation= NuTildeMoinsMoins = NuTildeMoins }
+    { Operation= NuTildeMoins = NuTilde }
+}

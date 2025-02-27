@@ -2,74 +2,95 @@
     { Type= ModeleCLSurGeometres }
     { Data=
         { Entite= NOEUDS }
+	
+		{ ConditionLimite=
+            { Nom= EntreeEcoulement }
+            { Type= CLDirichlet }
+            { Appartient= AppartientEntreeEcoulement }
+            { NbChamps= 4 }
+		    { Degres= Un Un Un Zero }
+		    { Valeurs= Vin Zero Zero Zero } 
+            { Priorite= 3 }   
+        }
+		{ ConditionLimite=
+            { Nom= SortieEcoulement }
+            { Type= CLDirichlet }
+            { Appartient= AppartientSortieEcoulement }
+            { NbChamps= 4 }
+		    { Degres= Zero Zero Zero Un }
+		    { Valeurs= Zero Zero Zero Zero } 
+            { Priorite= 0 }  
+        } 
+		{ ConditionLimite=
+            { Nom= Entree5 }
+            { Type= CLDirichlet }
+            { Appartient= Appartient_Cylinder }
+            { NbChamps= 4 }
+		    { Degres= Un Un Un Zero }
+		    { Valeurs= Vx Vy Vz Zero } 
+            { Priorite= 3 }   
+        } 
+		{ ConditionLimite=
+            { Nom= Entree6 }
+            { Type= CLDirichlet }
+            { Appartient= AppartientEntree6 }
+            { NbChamps= 4 }
+		    { Degres= Zero Zero Un Zero }
+		    { Valeurs= Zero Zero Zero Zero } 
+            { Priorite= 2 }  
+        } 
+        { ConditionLimite=
+            { Nom= Entree7 }
+            { Type= CLDirichlet }
+            { Appartient= AppartientEntree7 }
+            { NbChamps= 4 }
+		    { Degres= Zero Zero Un Zero }
+		    { Valeurs= Zero Zero Zero Zero } 
+            { Priorite= 2 }  
+        }
 		{ ConditionLimite=
             { Nom= Entree3 }
             { Type= CLDirichlet }
             { Appartient= AppartientEntree3 }
-            { NbChamps= 3 }
-		    { Degres= Un Un Zero }
-		    { Valeurs= Zero Zero Zero } 
-            { Priorite= 3 }  
+            { NbChamps= 4 }
+		    { Degres= Zero Un Zero Zero }
+		    { Valeurs= Zero Zero Zero Zero } 
+            { Priorite= 2 }  
         } 
 		{ ConditionLimite=
             { Nom= Entree4 }
             { Type= CLDirichlet }
             { Appartient= AppartientEntree4 }
-            { NbChamps= 3 }
-		    { Degres=  Un Un Zero }
-		    { Valeurs= Zero Zero Zero } 
-            { Priorite= 3 } 
+            { NbChamps= 4 }
+		    { Degres=  Zero Un Zero Zero }
+		    { Valeurs= Zero Zero Zero Zero } 
+            { Priorite= 2 } 
         }
-        { ConditionLimite=
-            { Nom= Entree1 }
-            { Type= CLDirichlet }
-            { Appartient= AppartientEntree1 }
-            { NbChamps= 3 }
-		    { Degres= Un Un Zero }
-		    { Valeurs= V Zero Zero } 
-            { Priorite= 2 }   
-        } 
-        { ConditionLimite=
-            { Nom= Entree2 }
-            { Type= CLDirichlet }
-            { Appartient= AppartientEntree2 }
-            { NbChamps= 3 }
-		    { Degres= Zero Zero Un }
-		    { Valeurs= Zero Zero Zero } 
-            { Priorite= 2 }  
-        } 
-		{ ConditionLimite=
-            { Nom= Entree5 }
-            { Type= CLDirichlet }
-            { Appartient= AppartientEntree5 }
-            { NbChamps= 3 }
-		    { Degres= Un Un Zero }
-		    { Valeurs= Zero Zero Zero } 
-            { Priorite= 1 }   
-        } 
-		{ ConditionLimite=
-            { Nom= Entree }
-            { Type= CLDirichlet }
-            { Appartient= BordNoeud }
-            { NbChamps= 3 }
-		    { Degres= Un Un Zero }
-		    { Valeurs= Zero Zero Zero } 
-            { Priorite= 0 }   
-        } 
     }  
 	{ Precision= PrecisionFrontieres }
     { Dependance=
         { Maillage= MaillagePrincipal }
-       	    { Champ= AppartientEntree5 }
-		 	{ Champ= AppartientEntree1 }
-			{ Champ= AppartientEntree2 }
+       	    { Champ= Appartient_Cylinder }
+		 	{ Champ= AppartientEntreeEcoulement }
+			{ Champ= AppartientSortieEcoulement }
 			{ Champ= AppartientEntree3 }
             { Champ= AppartientEntree4 }
+            { Champ= AppartientEntree6 }
+            { Champ= AppartientEntree7 }
 			{ Champ= BordNoeud }
 			{ Champ= PrecisionFrontieres }
 			{ Champ= V }
 			{ Champ= Un }
-			{ Champ= Zero }			
+			{ Champ= Zero }
+			{ Champ= Vx }	
+			{ Champ= Vy }
+			{ Champ= Vz }
+			{ Champ= Cox }
+			{ Champ= Coy }
+			{ Champ= x0 }
+			{ Champ= y0 }
+			{ Champ= omega }
+			{ Champ= Vin }
     }
 }
 

@@ -35,6 +35,7 @@
 		{ Modele= MetriqueGenerale }        
 	 	{ Modele= Sorties }          
 		{ Modele= MaillagePrincipal  }                  
+		{ Modele= Geometres }                
     } 
 } 
 

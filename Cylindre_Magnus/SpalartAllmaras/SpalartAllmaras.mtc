@@ -1,0 +1,391 @@
+{ PrepareSpalartAllmaras=
+    { Type= ModeleDeModeles }
+	{ Data=
+		{ Champ= 
+			{ Type= P0C_Scalaire_Par } 
+			{ Nom= GammaSA } 		
+			{ Data= ValeurItem 1 2.47 } 
+		}
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= NuTilde }             
+			{ Data= ValeurItem 1 0.0 }    0.00004083     
+		}
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= NuTildeMoins }  NuTildeMoinsMoins           
+			{ Data= ValeurItem 1 0.0 }    0.00004083    
+		}
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= NuTildeMoinsMoins }             
+			{ Data= ValeurItem 1 0 }    0.00004083    
+		}
+		{ Champ=             
+            { Type= P0_Tenseur_Par }             
+            { Nom= OmegaVitesseP0 }             
+            { Data= ValeurItem 9 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 }         
+		}
+		{ Champ=             
+			{ Type= P0_Vecteur_Par }             
+			{ Nom= GradNuTildeP0 }             
+			{ Data= ValeurItem 3 0.0 0.0 0.0 }         
+		}
+		{ Champ=             
+            { Type= P1_Vecteur_Par }             
+            { Nom= GradNuTilde }             
+            { Data= ValeurItem 3 0.0 0.0 0.0 }         
+		}
+		{ Champ=             
+            { Type= P1_Tenseur_Par }             
+            { Nom= OmegaVitesse }             
+            { Data= ValeurItem 9 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 }         
+		}
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= Damp }             
+			{ Data= ValeurItem 1 1 }         
+		}
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= Ki }             
+			{ Data= ValeurItem 1 0.0 }         
+		}
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= fv1 }             
+			{ Data= ValeurItem 1 0.0 }         
+		}
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= den }             
+			{ Data= ValeurItem 1 0.0 }         
+		}
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= denv }             
+			{ Data= ValeurItem 1 0.0 }         
+		}
+		{ Champ=             
+			{ Type= P0C_Scalaire_Par }             
+			{ Nom= Cv1Puiss3 }             
+			{ Data= ValeurItem 1 357.911 }         
+		}
+		{ Champ= 
+            { Type= P0C_Scalaire_Par }
+            { Nom= NuTildeIn }
+            { Data= ValeurItem 1 0.376 }
+		}
+		{ Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= NuTurb }
+            { Data= ValeurItem 1 0. }
+        }
+		{ Champ= 
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= DistMin }
+			{ Data= ValeurItem 1 0.00035 }  0.0000001                      
+        }
+	}
+	{ Dependance= 
+		{ Maillage= MaillagePrincipal }
+		
+		{ Modele= CalculVorticite }
+		{ Modele= CalculOmegaP1 }
+		{ Modele= ComputeGrad }
+		{ Modele= CalculGradNuTilde }
+		{ Modele= SpalartAllmarasTest }
+		 Modele= SortiesU 
+		{ Modele= ConvectNuTilde }
+		{ Modele= RecoverNuTurb }
+	}
+}
+
+
+{ SpalartAllmarasTest=
+   { Type= ModeleParticulaire }
+   { Data=
+        { ItemSolveur=
+            { Type= ISSpalartAllmaras } 
+            { Dimension= 3 } 
+            { NbChampSolution= 5 }
+            { ChampSolution= Convection Diffusion Reaction Damp denv }
+            { NbChampParametre= 9 }
+			{ TypeDeLoi= SAneg }  // SAneg
+            { ChampParametre= Vitesse OmegaVitesse NuTilde GradNuTilde LevelSet_Cylinder Eta1 Rho1 DistMin MeshSize } 
+        }
+	
+    }
+	
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Champ= Vitesse }
+        { Champ= OmegaVitesse }
+		{ Champ= NuTilde }
+		{ Champ= GradNuTilde }
+		{ Champ= LevelSet_Cylinder }
+		{ Champ= DistMin }
+        { Champ= Eta1 }
+        { Champ= Rho1 }
+        { Champ= MeshSize }
+    }
+	{ DependanceModifiable=
+        { Champ= Convection }
+        { Champ= Diffusion }
+		{ Champ= Reaction }
+		{ Champ= Damp }
+		{ Champ= denv }
+    }
+}
+
+
+{ CalculVorticite=
+	{ Type= ModeleFonctionnel }
+	{ Data=
+	   { SimplexSolveurFonctionnel=
+			{ Type= SsfVorticite }
+			{ NbChampSolution= 1 }
+			{ ChampSolution= OmegaVitesseP0 }
+			{ NbChampParametre= 1 }
+			{ ChampParametre= Vitesse }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Vitesse }
+	}
+}
+ 
+{ CalculOmegaP1=
+	{ Type= ModeleFonctionnel }
+	{ Data=
+		{ SimplexSolveurFonctionnel=
+			{ Type= SsfTest }
+			{ NbChampSolution= 1 }
+			{ ChampSolution= OmegaVitesse }
+			{ OperationsP1=
+				{ NbChampsP1= 1 }
+				{ Numero= 0 }
+				{ Initialise= 0.0 }
+				{ Operateur= += }
+				{ Moyenner= 1 }
+			}
+			{ NbChampParametre= 1 }
+			{ ChampParametre= OmegaVitesseP0 }
+		}
+	}
+	{ DependanceModifiable= 
+		{ Champ= OmegaVitesse }
+	}
+	{ Dependance=
+      { Maillage= MaillagePrincipal }
+      { Champ= OmegaVitesseP0 }
+	}
+}
+
+{ ComputeGrad=
+	{ Type= ModeleFonctionnel }
+	{ Data=
+		{ SimplexSolveurFonctionnel=
+			{ Type= SsfGradient }
+			{ NbChampSolution= 1 }
+			{ ChampSolution= GradNuTildeP0 }
+			{ NbChampParametre= 1 }
+			{ ChampParametre= NuTilde }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= NuTilde }
+	}
+ }
+ 
+{ IniNuTilde=
+	{ Type= ModeleArithmetique }
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Eta1 }
+		{ Champ= GammaSA }		
+	}
+	{ DependanceModifiable=
+		{ Champ= NuTilde }
+		{ Champ= NuTildeIn }
+		
+	}
+
+	{ Operation= NuTildeIn = Eta1 }
+	{ Operation= NuTildeIn *= GammaSA }	
+	{ Operation= NuTilde = NuTildeIn }
+}
+
+{ RecoverNuTurbIni=
+	{ Type= ModeleArithmetique }
+	{ Data=
+		{ Champ= 
+			{ Type= P0C_Scalaire_Par } 
+			{ Nom= Trois } 		
+			{ Data= ValeurItem 1 3.0 } 
+		}
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= Chi }             
+			{ Data= ValeurItem 1 0.0 }         
+		}	
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= ChiExp3 }             
+			{ Data= ValeurItem 1 0.0 }         
+		}			
+		{ Champ=             
+			{ Type= P0C_Scalaire_Par }             
+			{ Nom= Cv1Exp3 }             
+			{ Data= ValeurItem 1 357.911 }         
+		}
+		{ Champ=             
+			{ Type= P1_Scalaire_Par }             
+			{ Nom= aux }             
+			{ Data= ValeurItem 1 0.0 }         
+		}			
+	}
+	
+	{ Operation= Chi = NuTilde }
+	{ Operation= Chi /= Eta1 }
+	{ Operation= Chi *= Rho1 }
+
+	{ Operation= ChiExp3 = Chi }
+	{ Operation= ChiExp3 **= Trois }
+
+	{ Operation= aux = ChiExp3 }
+	{ Operation= aux += Cv1Exp3 }
+
+	{ Operation= fv1 = ChiExp3 }
+	{ Operation= fv1 /= aux }
+
+	{ Operation= NuTurb = fv1 }
+	{ Operation= NuTurb *= NuTilde }
+	
+	{ Operation= NuTurb > Zero }
+	{ Operation= NuTurb += Eta1 }
+	{ Operation= NuTurb *= Rho1 }	
+	
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= NuTilde }
+		{ Champ= Zero }
+		{ Champ= Trois }						
+		{ Champ= Eta1 }
+		{ Champ= Rho1 }	
+		{ Champ= Cv1Exp3 }			
+	}
+	{ DependanceModifiable=
+		{ Champ= Chi }
+		{ Champ= ChiExp3 }		
+		{ Champ= fv1 }	
+		{ Champ= aux }		
+		{ Champ= NuTurb }
+	}
+}
+ 
+{ CalculGradNuTilde=
+   { Type= ModeleFonctionnel }
+   { Data=
+      { SimplexSolveurFonctionnel=
+         { Type= SsfTest }
+         { NbChampSolution= 1 }
+         { ChampSolution= GradNuTilde }
+         { OperationsP1=
+            { NbChampsP1= 1 }
+               { Numero= 0 }
+               { Initialise= 0.0 }
+               { Operateur= += }
+               { Moyenner= 1 }
+			}
+       { NbChampParametre= 1 }
+       { ChampParametre= GradNuTildeP0 }
+	  }
+    }
+	{ DependanceModifiable= 
+		{ Champ= GradNuTilde }
+	}
+	{ Dependance=
+      { Maillage= MaillagePrincipal }
+      { Champ= GradNuTildeP0 }
+	}
+}
+
+{ RecoverNuTurb=
+	{ Type= ModeleArithmetique }
+	
+	{ Operation= NuTurb = Damp }
+	{ Operation= NuTurb *= NuTilde }
+	
+	{ Operation= NuTurb > Zero }
+	{ Operation= NuTurb += Eta1 }
+	{ Operation= NuTurb *= Rho1 }	
+	
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= NuTilde }
+		{ Champ= Cv1Puiss3 }
+		{ Champ= Damp }
+		{ Champ= Zero }
+		{ Champ= Eta1 }
+		{ Champ= Rho1 }		
+	}
+	{ DependanceModifiable=
+
+		{ Champ= NuTurb }
+	}
+}
+
+{ Calculh=
+	{ Type= ModeleFonctionnel }
+	{ Data=
+		{ Champ= 
+		    { Type= P0_Scalaire_Par }
+			{ Nom= h1 }
+			{ Data= ValeurItem 1 0.0 }
+		}
+		{ SimplexSolveurFonctionnel=
+			{ Type= SsfArete }
+            { TypeDArete= max }
+			{ NbChampSolution= 1 }
+			{ ChampSolution= h1 }
+ 		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= h1 }
+
+	}
+}
+{ PassageHP0EnHP1=
+    { Type= ModeleFonctionnel }
+    { Data=
+        { Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= MeshSize }
+			{ Data= ValeurItem 1 0.001 }
+		}
+        { SimplexSolveurFonctionnel=
+            { Type= SsfTest }
+            { NbChampSolution= 1 }
+            { ChampSolution= MeshSize }
+            { OperationsP1=
+                { NbChampsP1= 1 }
+                { Numero= 0 }
+                { Initialise= 0.0 }
+                { Moyenner= 1 }
+                { Operateur= += } 
+            }
+            { NbChampParametre= 1 }
+            { ChampParametre= h1 }
+        }
+        { Boucle= Volume }
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Champ= h1 }
+    }
+}
+

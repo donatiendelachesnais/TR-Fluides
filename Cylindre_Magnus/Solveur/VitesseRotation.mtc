@@ -1,0 +1,308 @@
+{ PrepareVitesseRotation=                                  
+    { Type= ModeleDeModeles }
+    { Data= 
+        
+		{ Champ= 
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= omega }
+			{ Data= ValeurItem 1 134.98 }                        
+        }
+		{ Champ= 
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= x0 }
+			{ Data= ValeurItem 1 8.25 }                   
+        }
+		{ Champ= 
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= y0 }
+			{ Data= ValeurItem 1 6.55 }   
+		}
+        { Champ= 
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= z0 }
+			{ Data= ValeurItem 1 3.1 }   
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Vx }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Vy }
+			{ Data= ValeurItem 1 0 }
+		}
+        { Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Vz }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= dx }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= dy }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= dz }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= dx2 }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= dy2 }
+			{ Data= ValeurItem 1 0 }
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= dxy }
+			{ Data= ValeurItem 1 0 }
+		}
+    }
+    { Dependance=      
+        { Maillage= MaillagePrincipal }
+        { Modele= ExtraireCox }
+		{ Modele= ExtraireCoy }
+		{ Modele= ExtraireCoz }
+		{ Modele= Preparedxdydz }
+		{ Modele= Preparedxy }
+		{ Modele= PrepareRepereTourne }
+		{ Modele= PrepareVxVyVz }
+    } 
+}
+
+{ ExtraireCox= 
+    { Type= ModeleParticulaire }
+    { Data=
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= Cox }
+            { Data= ValeurItem 1 0 }
+        }
+        { ItemSolveur=
+            { Type= ISExtraire }
+            { NbChampSolution= 1 }
+            { ChampSolution= Cox }
+            { NbChampParametre= 1 }
+            { ChampParametre= Coordonnees }
+            { Composante= 0 }
+        }
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Champ= Coordonnees }
+    }
+}
+
+{ ExtraireCoy= 
+    { Type= ModeleParticulaire }
+    { Data=
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= Coy }
+					{ Data= ValeurItem 1 0 }
+        }
+        { ItemSolveur=
+            { Type= ISExtraire }
+            { NbChampSolution= 1 }
+            { ChampSolution= Coy }
+            { NbChampParametre= 1 }
+            { ChampParametre= Coordonnees }
+            { Composante= 1 }
+        }
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Champ= Coordonnees }
+    }
+}
+
+{ ExtraireCoz= 
+    { Type= ModeleParticulaire }
+    { Data=
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= Coz }
+			{ Data= ValeurItem 1 0 }
+        }
+        { ItemSolveur=
+            { Type= ISExtraire }
+            { NbChampSolution= 1 }
+            { ChampSolution= Coz }
+            { NbChampParametre= 1 }
+            { ChampParametre= Coordonnees }
+            { Composante= 2 }
+        }
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Champ= Coordonnees }
+    }
+}
+
+{ Preparedxdydz=
+    { Type= ModeleArithmetique }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+		{ Champ= Cox }
+		{ Champ= Coy }
+		{ Champ= Coz }
+		{ Champ= x0 }
+		{ Champ= y0 }
+		{ Champ= z0 }
+    }
+    { DependanceModifiable= 
+        { Champ= dx }
+		{ Champ= dy }
+		{ Champ= dz }
+    }
+
+	{ Operation= dx += Cox }
+	{ Operation= dx -= x0 }
+    { Operation= dy += Coy }
+	{ Operation= dy -= y0 }
+    { Operation= dz += Coz }
+    { Operation= dz -= z0 }
+}
+
+{ Preparedxy=
+    { Type= ModeleArithmetique }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+		{ Champ= dx }
+		{ Champ= dy }
+        { Champ= dx2 }
+		{ Champ= dy2 }
+		{ Champ= Deux }
+		{ Champ= Undemi }
+
+    }
+    { DependanceModifiable= 
+        { Champ= dx2 }
+		{ Champ= dy2 }
+		{ Champ= dxy }
+    }
+	
+	{ Operation= dx2 += dx }		
+    { Operation= dx2 **= Deux }
+	{ Operation= dy2 += dy }
+	{ Operation= dy2 **= Deux }
+	{ Operation= dxy += dx2 }	
+	{ Operation= dxy += dy2 }			
+    { Operation= dxy **= Undemi }
+}
+
+{ PrepareRepereTourne=
+    { Type= ModeleArithmetique }
+    { Data=
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= dX }
+			{ Data= ValeurItem 1 0 }
+        }
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= dY }
+            { Data= ValeurItem 1 0 }
+        }
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= dZ }
+            { Data= ValeurItem 1 0 }
+        }
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= theta }
+            { Data= ValeurItem 1 0.262}
+        }
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= SinTheta }
+            { Data= ValeurItem 1 0 }
+        }
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= CosTheta }
+            { Data= ValeurItem 1 0 }
+        }
+        { Champ=
+            { Type= P1_Scalaire_Par }
+            { Nom= VarMuette }
+            { Data= ValeurItem 1 0 }
+        }
+    }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+		{ Champ= dx }
+		{ Champ= dy }
+		{ Champ= dz }
+		{ Champ= theta }
+        { Champ= SinTheta }
+        { Champ= CosTheta }
+        { Champ= VarMuette }
+    }
+    { DependanceModifiable= 
+        { Champ= dX }
+        { Champ= dY }
+        { Champ= dZ }
+        { Champ= SinTheta }
+        { Champ= CosTheta }
+        { Champ= VarMuette }
+    } 
+
+    { Operation= CosTheta Cos theta }
+	{ Operation= SinTheta Sin theta }
+
+
+	{ Operation= dX = dx }
+    { Operation= dX *= CosTheta }
+    { Operation= VarMuette = dy }
+    { Operation= VarMuette *= SinTheta }
+    { Operation= dX += VarMuette }
+
+    { Operation= dY = dy }
+    { Operation= dY *= CosTheta }
+    { Operation= VarMuette = dx }
+    { Operation= VarMuette *= SinTheta }
+    { Operation= dY -= VarMuette }
+
+    { Operation= dZ = dz }
+}
+
+{ PrepareVxVyVz=
+    { Type= ModeleArithmetique }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+		{ Champ= dX }
+		{ Champ= dY }
+        { Champ= dZ }
+        { Champ= CosTheta }        
+        { Champ= SinTheta }        
+		{ Champ= omega }
+    }
+    { DependanceModifiable= 
+        { Champ= Vx }
+		{ Champ= Vy }
+        { Champ= Vz }
+    }
+
+    { Operation= Vx -= dZ }
+	{ Operation= Vx *= omega }
+	{ Operation= Vx *= CosTheta }
+
+    { Operation= Vy -= dZ }
+	{ Operation= Vy *= omega }
+	{ Operation= Vy *= SinTheta }
+
+    { Operation= Vz = dX }
+    { Operation= Vz *= omega }
+}

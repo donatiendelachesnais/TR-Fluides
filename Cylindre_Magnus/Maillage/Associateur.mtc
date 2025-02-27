@@ -31,8 +31,8 @@
         { Maillage= MaillagePrincipal }
 		{ Modele= zeroAssociation } 
 		
-  		 Modele= AssociationScalaire 
-  		 Modele= addFonction 
+  		{ Modele= AssociationScalaire }
+  		{ Modele= addFonction }
 		
  		{ Modele= normaliseVecteur }
   		{ Modele= AssociationVecteur }

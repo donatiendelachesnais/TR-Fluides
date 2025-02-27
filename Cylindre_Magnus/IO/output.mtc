@@ -26,12 +26,35 @@
 	   { Champ= BordNoeud }
 	   { Champ= normeUnVecteur }
 	   { Champ= UnVecteur }
-	   { Champ= AppartientEntree1 }
-	   { Champ= AppartientEntree2 }
+	   { Champ= AppartientEntreeEcoulement }
+	   { Champ= AppartientSortieEcoulement }
 	   { Champ= AppartientEntree3 }
 	   { Champ= AppartientEntree4 }
-	   { Champ= AppartientEntree5 }
-	   { Champ= LevelSetEntree5 }
+	   { Champ= Appartient_Cylinder }
+	   { Champ= AppartientEntree6 }
+	   { Champ= AppartientEntree7 }
+	   { Champ= LevelSet_Cylinder }
+	   { Champ= Cox }
+	   { Champ= Coy }
+	   { Champ= Coz }
+	   { Champ= Vx }
+	   { Champ= Vy }
+	   { Champ= Vz }
+	   { Champ= dx }
+	   { Champ= dy }
+	   { Champ= dz }
+	   { Champ= dxy }
+	   { Champ= dX }
+	   { Champ= dY }
+	   { Champ= dZ }
+	   { Champ= Alpha }
+	   { Champ= NuTilde }
+	   { Champ= NuTurb  }
+	   { Champ= Convection }
+	   { Champ= Diffusion }
+	   { Champ= Reaction }
+	   { Champ= Damp }
+	   { Champ= denv }
     }
 
 }

@@ -1,0 +1,138 @@
+{ Torque=
+	{ Type= ModeleDeModeles }
+	{ Data=
+		{ Champ= { Type= P0_Vecteur_Par }	{ Nom= Tvect }	{ Data= ValeurItem 3 0 0 0 } }
+		{ Champ= { Type= P0C_Vecteur_Par }	{ Nom= TvectInteg }	{ Data= ValeurItem 3 0 0 0 } }
+		{ Champ= { Type= P0C_Scalaire_Par }	{ Nom= Torque }	{ Data= ValeurItem 1 0 } }
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Modele= CalculCmBeam0 }
+		{ Modele= CalcTvect }
+		{ Modele= IntegreTvect }
+		{ Modele= NormeTorque }
+		{ Modele= EcrireTvect }
+	}
+}
+
+{ CalculCmBeam0=
+	{ Type= ModeleFonctionnel }
+	{ Data=
+		{ Champ= { Type= P1_Vecteur_Par } { Nom= CoordonneesCBeam0 } { Data= ValeurItem 3 4 7.5 0 } }
+		{ Champ= { Type= P1_Scalaire_Par } { Nom= NSSourceTerm } { Data= ValeurItem 1 0.0 } }
+		{ Champ= { Type= P0_Scalaire_Par } { Nom= CmxBeam0 } { Data= ValeurItem 1 0.0 } }
+		{ Champ= { Type= P0_Scalaire_Par } { Nom= CmyBeam0 } { Data= ValeurItem 1 0.0 } }
+		{ Champ= { Type= P0_Scalaire_Par } { Nom= CmzBeam0 } { Data= ValeurItem 1 0.0 } }
+
+		{ SimplexSolveurFonctionnel=
+			{ Type= SsfTorque }
+			{ NbChampSolution= 3 }
+			{ ChampSolution= CmxBeam0 CmyBeam0 CmzBeam0 }
+			{ NbChampParametre= 12 } 
+			{ ChampParametre= Pression Eta1 Vitesse VitesseMoins PasDeTemps Un NSSourceTerm Coordonnees CoordonneesCBeam0 exVecteur eyVecteur ezVecteur }
+		}
+		{ Boucle= Volume }
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Vitesse }
+		{ Champ= VitesseMoins }
+		{ Champ= PasDeTemps }
+		{ Champ= Pression }
+		{ Champ= Zero }
+		{ Champ= Un }
+		{ Champ= exVecteur }
+		{ Champ= eyVecteur }
+		{ Champ= ezVecteur }
+		{ Champ= Eta1 }
+		{ Champ= NSSourceTerm }
+		{ Champ= Coordonnees }
+		{ Champ= CoordonneesCBeam0 }
+	}
+	{ DependanceModifiable=
+		{ Champ= CmxBeam0 }
+		{ Champ= CmyBeam0 }
+		{ Champ= CmzBeam0 }
+	}
+}
+
+{ CalcTvect=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ ItemSolveur=
+			{ Type= ISConcatenation }
+			{ NbChampSolution= 1 }
+			{ ChampSolution= Tvect }
+			{ NbChampParametre= 3 }
+			{ ChampParametre= CmxBeam0 CmyBeam0 CmzBeam0 }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= CmxBeam0 }
+		{ Champ= CmyBeam0 }
+		{ Champ= CmzBeam0 }
+	}
+	{ DependanceModifiable=
+		{ Champ= Tvect }
+	}
+}
+
+{ IntegreTvect=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ Boucle= Volume }
+		{ ItemSolveur=
+			{ Type= ISSomme }
+			{ Operations=
+				{ Initialise= Zero }
+			}
+			{ NbChampSolution= 1 }
+			{ ChampSolution= TvectInteg }
+			{ NbChampParametre= 1 }
+			{ ChampParametre= Tvect }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Tvect }
+		{ Champ= Zero }
+	}
+	{ DependanceModifiable=
+		{ Champ= TvectInteg }
+	}
+}
+
+{ NormeTorque=
+   { Type= ModeleParticulaire }
+   { Data=
+		{ ItemSolveur=
+			{ Type= ISNorme }
+			{ NbChampSolution= 1 }
+			{ ChampSolution= Torque }
+			{ NbChampParametre= 1 }
+			{ ChampParametre= TvectInteg }
+		}
+   }
+   { Dependance=
+      { Maillage= MaillagePrincipal }
+      { Champ= TvectInteg }
+   }
+}
+
+{ EcrireTvect=
+	{ Type= ModeleCapteur }
+	{ Data=
+		{ NomFichier= Resultats/Torque }
+		{ Precision= 15 }
+		{ NbCapteurs= 0 }
+		{ HAdaptation= 1 }
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Temps }
+		{ Champ= TvectInteg }
+		{ Champ= Torque }
+	}
+}
+

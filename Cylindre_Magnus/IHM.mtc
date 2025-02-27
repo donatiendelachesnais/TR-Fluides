@@ -1,21 +1,26 @@
 { Target= Prompt 0 }
 { Target= Prompteur 120000 }
 
-{ Target= PasDeTemps 0.1 } 
+{ Target= PasDeTemps 0.002 } 
      
-{ Target= TempsFin 10 }
+{ Target= TempsFin 4 }
 { Target= FrequenceStockage_vtk 5 } 
 
-{ Target= Eta1  0.001 }
+{ Target= Eta1  0.00000376 }
 { Target= Rho1  1 } 
 
 *****************************************************
 
-{ Target= NbElements 10000 }   
-{ Target= hMin 0.0001 }
-{ Target= Nscaling 1 }
+{ Target= NbElements 500000 } 
+{ Target= hMin 0.001 }
+
+{ Target= Nscaling 0.1 }
 { Target= ScaleNorme 1 }
 { Target= MinNorme 0.0001 }
 { Target= Err1 1 }  
-{ Target= Err2 0.005 }
+{ Target= Err2 0.03 }
 { Target= Adaptateur 5 } 
+
+{ Target= Lmax 0.003 } 
+{ Target= omega 134.98 } 
+{ Target= Vin 3 }

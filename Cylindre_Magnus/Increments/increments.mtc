@@ -16,8 +16,22 @@
     { Dependance=      
         { Maillage= MaillagePrincipal }  
         { Modele= Interacteur } 
-	  	{ Modele= Geometres } 
-		{ Modele= Sorties }          
+	  	{ Modele= Geometres }
+
+	  	{ Modele= PrepareDragLift } 		
+	  	{ Modele= Torque }
+		{ Modele= DragLift }
+
+	  	{ Modele= AdaptInit }
+
+        { Modele= IniNuTilde }
+        { Modele= RecoverNuTurbIni }
+        { Modele= UpdateV }
+        { Modele= UpdateNuTilde }
+
+        { Modele= PrepareVitesseRotation } 
+	
+		{ Modele= Sorties } 		
     } 
 }
 
@@ -27,26 +41,27 @@
         { Maillage= MaillagePrincipal } 
         { Modele= Interacteur } 
 	
-        { Modele= Geometres }
+		{ Modele= CLMecanique } 
 		
-		{ Modele= ExtraireOrdonnee }  	
-		{ Modele= CalculV }  	
-		{ Modele= CLMecanique }  	
 		{ Modele= NavierStokes }
+
+	  	{ Modele= PrepareDragLift } 
+		{ Modele= DragLift }
+	  	{ Modele= Torque } 
+
+		{ Modele= CLSpalartAllmaras }
+		{ Modele= PrepareSpalartAllmaras }
 		{ Modele= UpdateV }	
-		
-		{ Modele= DragLift }	
-		  
+
 	    { Modele= DeLaFonction }
-      	{ Modele= Adaptateur }
-		{ Modele= Geometres }
+      	{ Modele= Adaptateur }  // Geometres est appelé à chaque remaillage
 	   
 	  	{ Modele= Sorties }
-		{ Modele= GestionTemps }  
+		{ Modele= GestionTemps } 		
     } 
 } 
 
-{ GestionTemps=                              // T=T+dt jusqu'au T=Tfin
+{ GestionTemps=
     { Type= ModeleTemporel }     
     { Data=         
         { NomTemps= Temps }         
@@ -74,4 +89,20 @@
     } 
 } 
 
-
+{ AdaptInit=                                  
+    { Type= ModeleDeModeles }     
+    { Dependance=  
+        { Maillage= MaillagePrincipal } 
+        { Modele= DeLaFonction }
+      	{ Modele= Adaptateur }
+		{ Modele= Geometres }
+		
+		{ Modele= DeLaFonction }
+      	{ Modele= Adaptateur }
+		{ Modele= Geometres }
+		
+		{ Modele= DeLaFonction }
+      	{ Modele= Adaptateur }
+		{ Modele= Geometres }
+	}
+}

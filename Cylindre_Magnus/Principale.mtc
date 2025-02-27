@@ -4,31 +4,37 @@
     { Type= ModeleDeModeles }
     { Dependance=  
         { Maillage= MaillagePrincipal }
-		{ Modele= Increments } 			 
-	}
+        { Modele= Increments } 			 
+    }
 }
 
 Maillage
-{ Fichier4: Maillage/MetriqueGenerale.mtc }
-{ Fichier7: Maillage/adaptation.mtc }
-{ Fichier16: Maillage/Associateur.mtc }
-{ Fichier9: Maillage/maillage.mtc }
-{ Fichier23: Maillage/DeLaFonction.mtc }
+{ Fichier1: Maillage/MetriqueGenerale.mtc }
+{ Fichier2: Maillage/adaptation.mtc }
+{ Fichier3: Maillage/Associateur.mtc }
+{ Fichier4: Maillage/maillage.mtc }
+{ Fichier5: Maillage/DeLaFonction.mtc }
 
 Geometrie
-{ Fichier14: Geometrie/Geometres.mtc }
-{ Fichier166: Geometrie/GeometresE.mtc }
+{ Fichier6: Geometrie/Geometres.mtc }
+{ Fichier7: Geometrie/GeometresE.mtc }
 
 Solveur
-{ Fichier3: Solveur/Mecanique.mtc }
-{ Fichier5: Solveur/CLMecanique.mtc }
+{ Fichier8: Solveur/Mecanique.mtc }
+{ Fichier9: Solveur/CLMecanique.mtc }
+{ Fichier10: Solveur/VitesseRotation.mtc }
 
 IO	
-{ Fichier8: IO/output.mtc }
-{ Fichier1: IO/Parametres.mtc }
-{ Fichier17: IO/Interacteur.mtc }
-{ Fichier10: Increments/increments.mtc }
-{ Fichier6: Increments/temps.mtc }
+{ Fichier11: IO/output.mtc }
+{ Fichier12: IO/Parametres.mtc }
+{ Fichier13: IO/Interacteur.mtc }
+{ Fichier14: Increments/increments.mtc }
+{ Fichier15: Increments/temps.mtc }
 
 DragLift
-{ Fichier6: DragLift/DragLift.mtc }
+{ Fichier16: DragLift/DragLift.mtc }
+{ Fichier17: DragLift/Torque.mtc }
+
+SA
+{ Fichier18: SpalartAllmaras/ConvectionDiffusionReaction.mtc }
+{ Fichier19: SpalartAllmaras/SpalartAllmaras.mtc }

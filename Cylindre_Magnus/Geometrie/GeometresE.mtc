@@ -24,6 +24,17 @@
 		{ Modele= DefinitionP5 }
 		{ Modele= GeoP5 }
 		{ Modele= DistanceP5 }
+		
+		{ Modele= DefinitionP6 }
+		{ Modele= GeoP6 }
+		{ Modele= DistanceP6 }
+		
+		{ Modele= DefinitionP7 }
+		{ Modele= GeoP7 }
+		{ Modele= DistanceP7 }
+		
+		{ Modele= CalculAlpha }
+		{ Modele= CalculLevelSet_Cylinder_MoinsUn }
     }
 }
 
@@ -44,14 +55,15 @@
     }
 }
 
+// Entrée de l'écoulement
 { DefinitionP1=
     { Type= ModeleDeMouvements }
     { Data=
         { Repere=
-            { Dimension= 2 } 
-            { Nom= Entree1 }
-            { Origine= 0.0 0.0 } 
-            { Normale= 1.0 0.0 } 
+            { Dimension= 3 } 
+            { Nom= EntreeEcoulement }
+            { Origine= 0.0 0.0 0.0 } 
+            { Normale= 1.0 0.0 0.0 } 
         }
     }
     { Dependance= 
@@ -67,10 +79,10 @@
 			{ Type= GeometreAnalytique }
 			{ Data=
 				{ Forme= 
-					{ Dimension= 2 } 
+					{ Dimension= 3 } 
 					{ Type= DemiPlan }							
 				}
-				{ Repere= Entree1 }
+				{ Repere= EntreeEcoulement }
 			}
 		}
     }
@@ -85,18 +97,18 @@
 	{ Data=
 		{ Champ= 
 			{ Type= P1_Scalaire_Par }
-			{ Nom= LevelSetEntree1 }
+			{ Nom= LevelSetEntreeEcoulement }
 			{ Data= ValeurItem 1 0.0 }                        // ##
 		}
 		{ Champ= 
 			{ Type= P1_Scalaire_Par }
-			{ Nom= AppartientEntree1 }
+			{ Nom= AppartientEntreeEcoulement }
 			{ Data= ValeurItem 1 0.0 }                        // ##
 		}
 		{ ItemSolveur=
 			{ Type= ISGeometre }
 			{ NbChampSolution= 2 }
-			{ ChampSolution= AppartientEntree1 LevelSetEntree1 }
+			{ ChampSolution= AppartientEntreeEcoulement LevelSetEntreeEcoulement }
 			{ NbChampParametre= 2 }
 			{ ChampParametre= Coordonnees PrecisionFrontieres }
 			{ Geometre= MUR1 }
@@ -115,10 +127,10 @@
     { Type= ModeleDeMouvements }
     { Data=
         { Repere=
-            { Dimension= 2 } 
-            { Nom= Entree2 }
-            { Origine= 2.2 0.0 } 
-            { Normale= -1.0 0.0 } 
+            { Dimension= 3 } 
+            { Nom= SortieEcoulement }
+            { Origine= 16.5 0.0 0.0 } 
+            { Normale= -1.0 0.0 0.0 } 
         }
     }
     { Dependance= 
@@ -126,6 +138,7 @@
     }
 }
 
+// Sortie de l'écoulement
 { GeoP2=
     { Type= ModeleDeGeometres }
     { Data=
@@ -134,10 +147,10 @@
 			{ Type= GeometreAnalytique }
 			{ Data=
 				{ Forme= 
-					{ Dimension= 2 } 
+					{ Dimension= 3 } 
 					{ Type= DemiPlan }								
 				}
-				{ Repere= Entree2 }
+				{ Repere= SortieEcoulement }
 			}
 		}
     }
@@ -152,18 +165,18 @@
 	{ Data=
 		{ Champ= 
 			{ Type= P1_Scalaire_Par }
-			{ Nom= LevelSetEntree2 }
+			{ Nom= LevelSetSortieEcoulement }
 			{ Data= ValeurItem 1 0.0 }                        // ##
 		}
 		{ Champ= 
 			{ Type= P1_Scalaire_Par }
-			{ Nom= AppartientEntree2 }
+			{ Nom= AppartientSortieEcoulement }
 			{ Data= ValeurItem 1 0.0 }                        // ##
 		}
 		{ ItemSolveur=
 			{ Type= ISGeometre }
 			{ NbChampSolution= 2 }
-			{ ChampSolution= AppartientEntree2 LevelSetEntree2 }
+			{ ChampSolution= AppartientSortieEcoulement LevelSetSortieEcoulement }
 			{ NbChampParametre= 2 }
 			{ ChampParametre= Coordonnees PrecisionFrontieres }
 			{ Geometre= MUR2 }
@@ -178,14 +191,15 @@
 	}
 }
 
+//Bord droit
 { DefinitionP3=
     { Type= ModeleDeMouvements }
     { Data=
         { Repere=
-            { Dimension= 2 } 
+            { Dimension= 3 } 
             { Nom= Entree3 }
-            { Origine= 0.0 0.41 } 
-            { Normale= 0.0 -1.0 } 
+            { Origine= 0.0 13.1 0.0 } 
+            { Normale= 0.0 -1.0 0.0 } 
         }
     }
     { Dependance= 
@@ -201,7 +215,7 @@
 			{ Type= GeometreAnalytique }
 			{ Data=
 				{ Forme= 
-					{ Dimension= 2 } 
+					{ Dimension= 3 } 
 					{ Type= DemiPlan }								
 				}
 				{ Repere= Entree3 }
@@ -245,15 +259,15 @@
 	}
 }
 
-
+//Bord Gauche
 { DefinitionP4=
     { Type= ModeleDeMouvements }
     { Data=
         { Repere=
-            { Dimension= 2 } 
+            { Dimension= 3 } 
             { Nom= Entree4 }
-            { Origine= 0.0 0.0 } 
-            { Normale= 0.0 1.0 } 
+            { Origine= 0.0 0.0 0.0 } 
+            { Normale= 0.0 1.0 0.0 } 
         }
     }
     { Dependance= 
@@ -269,7 +283,7 @@
 			{ Type= GeometreAnalytique }
 			{ Data=
 				{ Forme= 
-					{ Dimension= 2 } 
+					{ Dimension= 3 } 
 					{ Type= DemiPlan }								
 				}
 				{ Repere= Entree4 }
@@ -317,10 +331,10 @@
     { Type= ModeleDeMouvements }
     { Data=
         { Repere=
-            { Dimension= 2 } 
+            { Dimension= 3 } 
             { Nom= Entree5 }
-            { Origine= 0.0 0.0 } 
-            { Axe= 1 0 0 1 } 
+            { Origine= 0.0 0.0 0.0 } 
+            { Axe= 0.966 0.259 0.000 -0.259 0.966 0.000 0.000 0.000 1.000} 
         }
     }
     { Dependance= 
@@ -338,11 +352,11 @@
 				{ Forme=
 					{ Type= FormeNewMaillageBis }
 					{ Data=
-						{ M: Circle.t }
+						{ M: Cylindre.t }
 						{ Localisation=
 							{ Brique= Boite }
 							{ Methode= Lineaire }
-							{ TailleMax= 512 }
+							{ TailleMax= 1024 }
 						}
 					}
 				}
@@ -356,23 +370,39 @@
     }
 }
 
+// Objet d'intérêt : le cylindre
 { DistanceP5=
 	{ Type= ModeleParticulaire }
 	{ Data=
 		{ Champ= 
 			{ Type= P1_Scalaire_Par }
-			{ Nom= LevelSetEntree5 }
+			{ Nom= LevelSet_Cylinder }
 			{ Data= ValeurItem 1 0.0 }                        // ##
 		}
 		{ Champ= 
 			{ Type= P1_Scalaire_Par }
-			{ Nom= AppartientEntree5 }
+			{ Nom= LevelSet_Cylinder_MoinsUn }
 			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Alpha }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= Appartient_Cylinder }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ Champ= 
+			{ Type= P0C_Scalaire_Par }
+			{ Nom= MoinsUn }
+			{ Data= ValeurItem 1 -1.0 }                        // ##
 		}
 		{ ItemSolveur=
 			{ Type= ISGeometre }
 			{ NbChampSolution= 2 }
-			{ ChampSolution= AppartientEntree5 LevelSetEntree5 }
+			{ ChampSolution= Appartient_Cylinder LevelSet_Cylinder }
 			{ NbChampParametre= 2 }
 			{ ChampParametre= Coordonnees PrecisionFrontieres }
 			{ Geometre= MUR5 }
@@ -387,3 +417,175 @@
 	}
 }
 
+//Bord bas
+{ DefinitionP6=
+    { Type= ModeleDeMouvements }
+    { Data=
+        { Repere=
+            { Dimension= 3 } 
+            { Nom= Entree6 }
+            { Origine= 0.0 0.0 0.0 } 
+            { Normale= 0.0 0.0 1.0 } 
+        }
+    }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+    }
+}
+
+{ GeoP6=
+    { Type= ModeleDeGeometres }
+    { Data=
+		{ Geometre= 
+			{ Nom= MUR6 }
+			{ Type= GeometreAnalytique }
+			{ Data=
+				{ Forme= 
+					{ Dimension= 3 } 
+					{ Type= DemiPlan }								
+				}
+				{ Repere= Entree6 }
+			}
+		}
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Modele= DefinitionP6 }
+    }
+}
+
+{ DistanceP6=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= LevelSetEntree6 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= AppartientEntree6 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ ItemSolveur=
+			{ Type= ISGeometre }
+			{ NbChampSolution= 2 }
+			{ ChampSolution= AppartientEntree6 LevelSetEntree6 }
+			{ NbChampParametre= 2 }
+			{ ChampParametre= Coordonnees PrecisionFrontieres }
+			{ Geometre= MUR6 }
+			{ Distance= 1 }
+			{ Appartient= 1 }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Coordonnees }
+		{ Champ= PrecisionFrontieres }
+	}
+}
+
+//Bord haut
+{ DefinitionP7=
+    { Type= ModeleDeMouvements }
+    { Data=
+        { Repere=
+            { Dimension= 3 } 
+            { Nom= Entree7 }
+            { Origine= 0.0 0.0 6.2 } 
+            { Normale= 0.0 0.0 -1.0 } 
+        }
+    }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+    }
+}
+
+{ GeoP7=
+    { Type= ModeleDeGeometres }
+    { Data=
+		{ Geometre= 
+			{ Nom= MUR7 }
+			{ Type= GeometreAnalytique }
+			{ Data=
+				{ Forme= 
+					{ Dimension= 3 } 
+					{ Type= DemiPlan }								
+				}
+				{ Repere= Entree7 }
+			}
+		}
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Modele= DefinitionP7 }
+    }
+}
+
+{ DistanceP7=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= LevelSetEntree7 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ Champ= 
+			{ Type= P1_Scalaire_Par }
+			{ Nom= AppartientEntree7 }
+			{ Data= ValeurItem 1 0.0 }                        // ##
+		}
+		{ ItemSolveur=
+			{ Type= ISGeometre }
+			{ NbChampSolution= 2 }
+			{ ChampSolution= AppartientEntree7 LevelSetEntree7 }
+			{ NbChampParametre= 2 }
+			{ ChampParametre= Coordonnees PrecisionFrontieres }
+			{ Geometre= MUR7 }
+			{ Distance= 1 }
+			{ Appartient= 1 }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= Coordonnees }
+		{ Champ= PrecisionFrontieres }
+	}
+}
+
+{ CalculAlpha=
+   { Type= ModeleParticulaire }
+   { Data=	
+      { ItemSolveur=
+         { Type= ISfonctionTC }
+ 		 { Passe= 9 }
+         { NbChampSolution= 1 }
+         { ChampSolution= Alpha }
+         { NbChampParametre= 3 }
+         { ChampParametre= LevelSet_Cylinder Lmin Lmax }
+      }
+   }
+   { DependanceModifiable=
+       { Champ= Alpha }
+   }
+   { Dependance=
+      { Maillage= MaillagePrincipal }
+      { Champ= LevelSet_Cylinder }
+      { Champ= Lmax }
+      { Champ= Lmin }
+   }
+}
+
+{ CalculLevelSet_Cylinder_MoinsUn=
+    { Type= ModeleArithmetique }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+        { Champ= MoinsUn }
+        { Champ= LevelSet_Cylinder }
+    }
+    { DependanceModifiable= 
+        { Champ= LevelSet_Cylinder_MoinsUn }
+    }
+    { Operation= LevelSet_Cylinder_MoinsUn = LevelSet_Cylinder }
+    { Operation= LevelSet_Cylinder_MoinsUn *= MoinsUn }
+}

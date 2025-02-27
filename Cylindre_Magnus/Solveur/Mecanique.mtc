@@ -12,6 +12,11 @@
 			{ Data: Dimension/vecteur.txt }	
 	    }
 		{ Champ= 
+			{ Type= P1_Vecteur_Par }
+			{ Nom= VitesseMoinsMoins }
+			{ Data: Dimension/vecteur.txt }	
+		}
+		{ Champ= 
 			{ Type= P1_Scalaire_Par }
 			{ Nom= Pression }
 			{ Data= ValeurItem 1 0.0 }
@@ -20,6 +25,11 @@
 			{ Type= P1_Vecteur_Par }
 			{ Nom= ZeroVecteur }
 			{ Data: Dimension/vecteur.txt }
+	    }
+		{ Champ= 
+			{ Type= P1_Tenseur_Par }
+			{ Nom= ZeroTenseur }
+			{ Data: Dimension/tenseur.txt }
 	    }
 		{ Champ= 
 			{ Type= P1_Vecteur_Par }
@@ -35,8 +45,8 @@
 			{ Type= NavierStokesVMS }
 			{ Resolution= 12  }  
 			{ Preconditionneur= 20 } 
-			{ NbChampParametre= 8 }
-			{ ChampParametre= Eta1 Gravite Vitesse VitesseMoins Rho1 PasDeTemps ZeroVecteur Zero }
+			{ NbChampParametre= 9 }
+			{ ChampParametre= NuTurb ZeroVecteur Vitesse VitesseMoins Rho1 PasDeTemps ZeroVecteur ZeroTenseur ZeroVecteur }
 			{ NbChampSolution= 2 }
 			{ ChampSolution= Vitesse Pression }
 			{ Newton= 0.5 }	
@@ -50,12 +60,14 @@
 	{ Dependance=
 		{ Champ= Gravite }
 		{ Champ= ZeroVecteur }
+		{ Champ= ZeroTenseur }
 		{ Champ= Vitesse }
 		{ Champ= VitesseMoins }
 		{ Champ= PasDeTemps }
 		{ Champ= Eta1 }
 		{ Champ= Rho1 }
 		{ Champ= Zero }
+		{ Champ= NuTurb }
 		{ Maillage= MaillagePrincipal }
 		{ ModeleCL= CLMecanique } 
 	}
@@ -69,7 +81,9 @@
     }
     { DependanceModifiable= 
         { Champ= VitesseMoins }
+		{ Champ= VitesseMoinsMoins }
     }
-    { Operation= VitesseMoins = Vitesse }
+	{ Operation= VitesseMoinsMoins = VitesseMoins }
+	{ Operation= VitesseMoins = Vitesse }
 }
  
